@@ -5,3 +5,5 @@ This Addon for [DiscordIntegration](https://github.com/ErdbeerbaerLP/Discord-Cha
 Those notifications will show when someone joins, leaves or moves between voice channels.
 
 You can filter which voice channels should get messages, or just get messages for all voice channels
+
+![](https://github.com/ErdbeerbaerLP/DiscordIntegration-Voice-Notifications/raw/master/messages.png)
