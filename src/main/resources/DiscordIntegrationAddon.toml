@@ -1,0 +1,16 @@
+# Name of the addon
+name = "Voice Notification"
+
+# Version of the addon
+version = "1.0.0"
+# Path to the main class of the addon
+# Example: "com.example.exampleaddon.ExampleAddon"
+#
+# If this parameter is missing, your addon will not load
+classPath = "de.erdbeerbaerlp.dcintegrationVoiceNotif.VoiceNotificationAddon"
+
+# Author of the Addon (optional)
+author = "ErdbeerbaerLP"
+
+# Description of the Addon (optional)
+description = "Sends ingame messages when users join voice channels"
