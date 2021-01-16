@@ -1,0 +1,19 @@
+# Message sent to Minecraft when someone joins an voice channel
+# 
+# Placeholders:
+# %dstName% - Destination Channel of the move
+# %name% - Display name (Nickname or account name) of the Discord user
+joinMessage = "§6[§5DISCORD§6]§a + §7%name% joined the voice channel \"§3%dstName%§7\""
+# Message sent to Minecraft when someone left an voice channel
+# 
+# Placeholders:
+# %sourceName% - Source Channel of the move
+# %name% - Display name (Nickname or account name) of the Discord user
+leaveMessage = "§6[§5DISCORD§6]§c - §7%name% left the voice channel \"§3%sourceName%§7\""
+# Message sent to Minecraft when someone moved between two channels
+# 
+# Placeholders:
+# %sourceName% - Source Channel of the move
+# %dstName% - Destination Channel of the move
+# %name% - Display name (Nickname or account name) of the Discord user
+moveMessage = "§6[§5DISCORD§6]§7 %name% moved from the voice channel \"§3%sourceName%§7\" to \"§3%dstName%§7\""
