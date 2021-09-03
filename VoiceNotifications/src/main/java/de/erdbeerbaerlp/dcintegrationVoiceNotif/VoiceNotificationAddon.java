@@ -28,7 +28,7 @@ public class VoiceNotificationAddon implements DiscordIntegrationAddon, EventLis
     public void load(Discord dc) {
         cfg = AddonConfigRegistry.registerConfig(VoiceConfig.class, this);
         discord = dc;
-        System.out.println("Addon loaded");
+        System.out.println("Voice-Notifications Addon loaded");
         if (dc.getJDA() != null)
             dc.getJDA().addEventListener(this);
     }

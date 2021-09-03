@@ -1,0 +1,3 @@
+# Command description of the execute command
+commandDescription = "Führt einen in-game Befehl aus"
+commandArgDescription = "Befehl zum Asuführen (ohne Slash)"

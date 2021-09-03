@@ -1,9 +1,6 @@
-Discord Integration Voice Notification Addon
------
-This Addon for [DiscordIntegration](https://github.com/ErdbeerbaerLP/Discord-Chat-Integration) adds voice channel notifications to the game.
+DiscordIntegration Addons
+===
 
-Those notifications will show when someone joins, leaves or moves between voice channels.
+This repository contains all DiscordIntegration addons I made
 
-You can filter which voice channels should get messages, or just get messages for all voice channels
-
-![](https://github.com/ErdbeerbaerLP/DiscordIntegration-Voice-Notifications/raw/master/messages.png)
+**Download** releases and translated configs [HERE](https://github.com/ErdbeerbaerLP/DiscordIntegration-Addon-Repository/tree/master/_Releases)

@@ -1,0 +1,16 @@
+# Name of the addon
+name = "Execute Command"
+
+# Version of the addon
+version = "1.0.0"
+# Path to the main class of the addon
+# Example: "com.example.exampleaddon.ExampleAddon"
+#
+# If this parameter is missing, your addon will not load
+classPath = "de.erdbeerbaerlp.dcintegrationExecCmd.ExecCommandAddon"
+
+# Author of the Addon (optional)
+author = "ErdbeerbaerLP"
+
+# Description of the Addon (optional)
+description = "Adds an /exec command to discord, allowing to run ANY in-game command from discord"

@@ -1,0 +1,15 @@
+plugins {
+    id 'java'
+}
+
+group 'de.erdbeerbaerlp.dcintegration-voiceaddon'
+version '1.0.1'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    compileOnly 'de.erdbeerbaerlp:DiscordIntegration-Core:c82c60a7'
+}
