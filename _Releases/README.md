@@ -8,6 +8,6 @@ Sends notifications into ingame-chat when someone joins/leaves Voice Channels
 
 Execute Command
 ==
-Adds an /execute command to discord, allowing to run *any* server command from discord
+Adds an /exec command to discord, allowing to run *any* server command from discord
 
 ####Version 1.0.1 only works with Discord Integration 2.3.4!
