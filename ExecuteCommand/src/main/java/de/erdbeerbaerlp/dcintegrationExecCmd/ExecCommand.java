@@ -1,6 +1,6 @@
 package de.erdbeerbaerlp.dcintegrationExecCmd;
 
-import de.erdbeerbaerlp.dcintegration.common.discordCommands.inChat.DiscordCommand;
+import de.erdbeerbaerlp.dcintegration.common.discordCommands.DiscordCommand;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 

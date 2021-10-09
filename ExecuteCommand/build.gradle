@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'de.erdbeerbaerlp.dcintegration-executecommand'
-version '1.0.0'
+version '1.0.1'
 
 repositories {
     mavenCentral()
@@ -11,5 +11,5 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'de.erdbeerbaerlp:DiscordIntegration-Core:c82c60a7'
+    compileOnly 'de.erdbeerbaerlp:DiscordIntegration-Core:832b562e'
 }

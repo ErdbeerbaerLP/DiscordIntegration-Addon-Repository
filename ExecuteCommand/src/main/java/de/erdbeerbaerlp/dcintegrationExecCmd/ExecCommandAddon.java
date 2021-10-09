@@ -4,7 +4,7 @@ package de.erdbeerbaerlp.dcintegrationExecCmd;
 import de.erdbeerbaerlp.dcintegration.common.Discord;
 import de.erdbeerbaerlp.dcintegration.common.addon.AddonConfigRegistry;
 import de.erdbeerbaerlp.dcintegration.common.addon.DiscordIntegrationAddon;
-import de.erdbeerbaerlp.dcintegration.common.discordCommands.CommandRegistry;
+import de.erdbeerbaerlp.dcintegration.common.storage.CommandRegistry;
 import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.hooks.EventListener;

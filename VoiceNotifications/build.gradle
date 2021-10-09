@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'de.erdbeerbaerlp.dcintegration-voiceaddon'
-version '1.0.1'
+version '1.0.2'
 
 repositories {
     mavenCentral()
@@ -11,5 +11,5 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'de.erdbeerbaerlp:DiscordIntegration-Core:c82c60a7'
+    compileOnly 'de.erdbeerbaerlp:DiscordIntegration-Core:832b562e'
 }
