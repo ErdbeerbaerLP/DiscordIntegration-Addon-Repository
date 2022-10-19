@@ -6,7 +6,7 @@ import de.erdbeerbaerlp.dcintegration.common.addon.AddonConfigRegistry;
 import de.erdbeerbaerlp.dcintegration.common.addon.DiscordIntegrationAddon;
 import de.erdbeerbaerlp.dcintegration.common.storage.CommandRegistry;
 import net.dv8tion.jda.api.events.GenericEvent;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
 import net.dv8tion.jda.api.interactions.InteractionHook;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
@@ -42,11 +42,11 @@ public class ExecCommandAddon implements DiscordIntegrationAddon, EventListener 
 
     @Override
     public void onEvent(GenericEvent event) {
-        if (event instanceof SlashCommandEvent) {
-            if(((SlashCommandEvent) event).getName().equals("exec")){
-                final CompletableFuture<InteractionHook> reply = ((SlashCommandEvent) event).deferReply().submit();
-                final OptionMapping cmd = ((SlashCommandEvent) event).getOption("cmd");
-                discord.srv.runMcCommand(cmd.getAsString(),reply,((SlashCommandEvent) event).getUser());
+        if (event instanceof SlashCommandInteractionEvent) {
+            if(((SlashCommandInteractionEvent) event).getName().equals("exec")){
+                final CompletableFuture<InteractionHook> reply = ((SlashCommandInteractionEvent) event).deferReply().submit();
+                final OptionMapping cmd = ((SlashCommandInteractionEvent) event).getOption("cmd");
+                discord.srv.runMcCommand(cmd.getAsString(),reply,((SlashCommandInteractionEvent) event).getUser());
             }
         }
     }

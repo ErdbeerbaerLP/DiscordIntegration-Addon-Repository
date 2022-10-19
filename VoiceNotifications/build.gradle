@@ -3,13 +3,13 @@ plugins {
 }
 
 group 'de.erdbeerbaerlp.dcintegration-voiceaddon'
-version '1.0.2'
+version '1.0.3'
 
 repositories {
     mavenCentral()
-    maven { url 'https://jitpack.io' }
+    maven { url 'https://repo.erdbeerbaerlp.de/repository/maven-public/' }
 }
 
 dependencies {
-    compileOnly 'de.erdbeerbaerlp:DiscordIntegration-Core:832b562e'
+    compileOnly 'de.erdbeerbaerlp:dcintegration.common:2.4.7'
 }

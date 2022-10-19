@@ -1,8 +1,9 @@
 package de.erdbeerbaerlp.dcintegrationExecCmd;
 
 import de.erdbeerbaerlp.dcintegration.common.discordCommands.DiscordCommand;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.requests.restaction.interactions.ReplyCallbackAction;
 
 public class ExecCommand extends DiscordCommand {
 
@@ -12,12 +13,12 @@ public class ExecCommand extends DiscordCommand {
     }
 
     @Override
-    public void execute(SlashCommandEvent ev) {
-
+    public boolean adminOnly() {
+        return ExecCommandAddon.cfg.adminOnly;
     }
 
     @Override
-    public boolean adminOnly() {
-        return ExecCommandAddon.cfg.adminOnly;
+    public void execute(SlashCommandInteractionEvent ev, ReplyCallbackAction reply) {
+
     }
 }
