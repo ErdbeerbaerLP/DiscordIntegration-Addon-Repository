@@ -14,12 +14,12 @@ import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import java.util.concurrent.CompletableFuture;
 
 public class ExecCommandAddon implements DiscordIntegrationAddon, EventListener {
-    static VoiceConfig cfg;
+    static ExecuteCommandConfig cfg;
     Discord discord;
 
     @Override
     public void load(Discord dc) {
-        cfg = AddonConfigRegistry.registerConfig(VoiceConfig.class, this);
+        cfg = AddonConfigRegistry.loadConfig(ExecuteCommandConfig.class, this);
         discord = dc;
         System.out.println("Addon loaded");
         if (dc.getJDA() != null) {
@@ -30,7 +30,7 @@ public class ExecCommandAddon implements DiscordIntegrationAddon, EventListener 
 
     @Override
     public void reload() {
-        cfg = AddonConfigRegistry.loadConfig(cfg);
+        cfg = AddonConfigRegistry.loadConfig(cfg, this);
     }
 
     @Override

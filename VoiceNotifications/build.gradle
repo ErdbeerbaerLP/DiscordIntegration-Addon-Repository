@@ -3,13 +3,19 @@ plugins {
 }
 
 group 'de.erdbeerbaerlp.dcintegration-voiceaddon'
-version '1.0.3'
+version '1.0.4-SNAPSHOT'
 
 repositories {
     mavenCentral()
     maven { url 'https://repo.erdbeerbaerlp.de/repository/maven-public/' }
 }
 
+configurations.all {
+    resolutionStrategy {
+        cacheChangingModulesFor 1, 'minutes'
+    }
+}
 dependencies {
-    compileOnly 'de.erdbeerbaerlp:dcintegration.common:2.4.7'
+    compileOnly 'de.erdbeerbaerlp:dcintegration.common:2.5.0-SNAPSHOT'
+    compileOnly group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.17.1'
 }

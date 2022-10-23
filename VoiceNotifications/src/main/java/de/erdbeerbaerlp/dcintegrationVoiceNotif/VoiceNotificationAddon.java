@@ -10,34 +10,34 @@ import dcshadow.org.apache.commons.lang3.ArrayUtils;
 import de.erdbeerbaerlp.dcintegration.common.Discord;
 import de.erdbeerbaerlp.dcintegration.common.addon.AddonConfigRegistry;
 import de.erdbeerbaerlp.dcintegration.common.addon.DiscordIntegrationAddon;
-import de.erdbeerbaerlp.dcintegration.common.storage.Configuration;
 import de.erdbeerbaerlp.dcintegration.common.storage.Localization;
 import de.erdbeerbaerlp.dcintegration.common.util.ComponentUtils;
-import net.dv8tion.jda.api.entities.AudioChannel;
-import net.dv8tion.jda.api.entities.VoiceChannel;
+import de.erdbeerbaerlp.dcintegration.common.util.Variables;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
 import net.dv8tion.jda.api.events.GenericEvent;
-import net.dv8tion.jda.api.events.guild.voice.GenericGuildVoiceUpdateEvent;
-import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
-import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
-import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceUpdateEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-public class VoiceNotificationAddon implements DiscordIntegrationAddon, EventListener {
+import java.lang.reflect.InvocationTargetException;
+
+public class VoiceNotificationAddon extends ListenerAdapter implements DiscordIntegrationAddon {
     private VoiceConfig cfg;
     Discord discord;
 
     @Override
     public void load(Discord dc) {
-        cfg = AddonConfigRegistry.registerConfig(VoiceConfig.class, this);
+        cfg = AddonConfigRegistry.loadConfig(VoiceConfig.class, this);
         discord = dc;
-        System.out.println("Voice-Notifications Addon loaded");
+        Variables.LOGGER.info("Voice-Notifications Addon loaded");
         if (dc.getJDA() != null)
             dc.getJDA().addEventListener(this);
     }
 
     @Override
     public void reload() {
-        cfg = AddonConfigRegistry.loadConfig(cfg);
+        cfg = AddonConfigRegistry.loadConfig(cfg,this);
     }
 
     @Override
@@ -47,21 +47,27 @@ public class VoiceNotificationAddon implements DiscordIntegrationAddon, EventLis
     }
 
     @Override
-    public void onEvent(GenericEvent event) {
-        if (event instanceof GenericGuildVoiceUpdateEvent evt) {
-            final AudioChannel joinedChannel = evt.getChannelJoined();
-            final AudioChannel leftChannel = evt.getChannelLeft();
-            if (cfg.voiceChannels.length == 0 || (joinedChannel != null && ArrayUtils.contains(cfg.voiceChannels, joinedChannel.getId())) || (leftChannel != null && ArrayUtils.contains(cfg.voiceChannels, leftChannel.getId()))) {
-                if (event instanceof GuildVoiceJoinEvent ev) {
-                    discord.srv.sendMCMessage(LegacyComponentSerializer.legacySection().deserialize(cfg.joinMessage.replace("%dstName%", ev.getChannelJoined().getName())).replaceText(ComponentUtils.replace("%name%", Component.text(ev.getMember().getEffectiveName()).style(Style.empty().clickEvent(ClickEvent.suggestCommand("<@" + ev.getMember().getId() + ">")).hoverEvent(HoverEvent.showText(Component.text(Localization.instance().discordUserHover.replace("%user#tag%", ev.getMember().getUser().getAsTag()).replace("%user%",ev.getMember().getEffectiveName()).replace("%id%",ev.getMember().getId()))))))));
-                } else if (event instanceof GuildVoiceLeaveEvent ev) {
-                    discord.srv.sendMCMessage(LegacyComponentSerializer.legacySection().deserialize(cfg.leaveMessage.replace("%sourceName%", ev.getChannelLeft().getName())).replaceText(ComponentUtils.replace("%name%", Component.text(ev.getMember().getEffectiveName()).style(Style.empty().clickEvent(ClickEvent.suggestCommand("<@" + ev.getMember().getId() + ">")).hoverEvent(HoverEvent.showText(Component.text(Localization.instance().discordUserHover.replace("%user#tag%", ev.getMember().getUser().getAsTag()).replace("%user%",ev.getMember().getEffectiveName()).replace("%id%",ev.getMember().getId()))))))));
+    public void onGuildVoiceUpdate(GuildVoiceUpdateEvent event) {
+        final Class<? extends GuildVoiceUpdateEvent> aClass = event.getClass();
+        AudioChannel joinedChannel,leftChannel;
+        Member member;
+        try {
+            joinedChannel= (AudioChannel) aClass.getMethod("getChannelJoined").invoke(event);
+            leftChannel = (AudioChannel) aClass.getMethod("getChannelLeft").invoke(event);
+            member = (Member) aClass.getMethod("getMember").invoke(event);
+        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+        if (cfg.voiceChannels.length == 0 || (joinedChannel != null && ArrayUtils.contains(cfg.voiceChannels, joinedChannel.getId())) || (leftChannel != null && ArrayUtils.contains(cfg.voiceChannels, leftChannel.getId()))) {
+            if (joinedChannel != null && leftChannel == null) {
+                discord.srv.sendMCMessage(LegacyComponentSerializer.legacySection().deserialize(cfg.joinMessage.replace("%dstName%", joinedChannel.getName())).replaceText(ComponentUtils.replace("%name%", Component.text(member.getEffectiveName()).style(Style.empty().clickEvent(ClickEvent.suggestCommand("<@" + member.getId() + ">")).hoverEvent(HoverEvent.showText(Component.text(Localization.instance().discordUserHover.replace("%user#tag%", member.getUser().getAsTag()).replace("%user%", member.getEffectiveName()).replace("%id%", member.getId()))))))));
+            } else if (leftChannel != null && joinedChannel == null) {
+                discord.srv.sendMCMessage(LegacyComponentSerializer.legacySection().deserialize(cfg.leaveMessage.replace("%sourceName%", leftChannel.getName())).replaceText(ComponentUtils.replace("%name%", Component.text(member.getEffectiveName()).style(Style.empty().clickEvent(ClickEvent.suggestCommand("<@" + member.getId() + ">")).hoverEvent(HoverEvent.showText(Component.text(Localization.instance().discordUserHover.replace("%user#tag%", member.getUser().getAsTag()).replace("%user%", member.getEffectiveName()).replace("%id%", member.getId()))))))));
 
-                } else if (event instanceof GuildVoiceMoveEvent ev) {
-                    discord.srv.sendMCMessage(LegacyComponentSerializer.legacySection().deserialize(cfg.moveMessage.replace("%sourceName%", ev.getChannelLeft().getName()).replace("%dstName%", ev.getChannelJoined().getName())).replaceText(ComponentUtils.replace("%name%", Component.text(ev.getMember().getEffectiveName()).style(Style.empty().clickEvent(ClickEvent.suggestCommand("<@" + ev.getMember().getId() + ">")).hoverEvent(HoverEvent.showText(Component.text(Localization.instance().discordUserHover.replace("%user#tag%", ev.getMember().getUser().getAsTag()).replace("%user%",ev.getMember().getEffectiveName()).replace("%id%",ev.getMember().getId()))))))));
-
-                }
+            } else{
+                discord.srv.sendMCMessage(LegacyComponentSerializer.legacySection().deserialize(cfg.moveMessage.replace("%sourceName%", leftChannel.getName()).replace("%dstName%", joinedChannel.getName())).replaceText(ComponentUtils.replace("%name%", Component.text(member.getEffectiveName()).style(Style.empty().clickEvent(ClickEvent.suggestCommand("<@" + member.getId() + ">")).hoverEvent(HoverEvent.showText(Component.text(Localization.instance().discordUserHover.replace("%user#tag%", member.getUser().getAsTag()).replace("%user%", member.getEffectiveName()).replace("%id%", member.getId()))))))));
             }
         }
     }
+
 }

@@ -4,7 +4,7 @@ import dcshadow.com.moandjiezana.toml.TomlComment;
 import de.erdbeerbaerlp.dcintegration.common.addon.AddonConfiguration;
 
 
-public class VoiceConfig extends AddonConfiguration {
+public class VoiceConfig {
     @TomlComment({"Message sent to Minecraft when someone joins an voice channel", "", "Placeholders:", "%dstName% - Destination Channel of the move", "%name% - Display name (Nickname or account name) of the Discord user"})
     public String joinMessage = "\u00A76[\u00A75DISCORD\u00A76]\u00A7a + \u00A77 %name% joined the voice channel \"\u00A73%dstName%\u00A77\"";
 
