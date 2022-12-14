@@ -13,3 +13,8 @@ Adds an /exec command to discord, allowing to run *any* server command from disc
 
 #### 1.0.3 was released to support 2.4.x versions
 #### 1.0.4 supports 2.5.x
+
+MySQL
+==
+Adds MySQL implementation to the link feature. Only useful with version 2.6.0+
+Use `databaseClass = "de.erdbeerbaerlp.dcintegrationMySQL.MySQLInterface"`
