@@ -2,7 +2,7 @@
 name = "MySQL"
 
 # Version of the addon
-version = "1.0.0"
+version = "1.1.0"
 # Path to the main class of the addon
 # Example: "com.example.exampleaddon.ExampleAddon"
 #
@@ -14,3 +14,5 @@ author = "ErdbeerbaerLP"
 
 # Description of the Addon (optional)
 description = "Adds MySQL as a Database integration type"
+
+APIVersion = 3

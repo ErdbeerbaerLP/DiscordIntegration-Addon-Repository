@@ -14,3 +14,5 @@ author = "ErdbeerbaerLP"
 
 # Description of the Addon (optional)
 description = "Adds an /exec command to discord, allowing to run ANY in-game command from discord"
+
+APIVersion = 3

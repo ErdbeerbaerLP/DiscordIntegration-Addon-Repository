@@ -1,7 +1,7 @@
 package de.erdbeerbaerlp.dcintegrationExecCmd;
 
 
-import de.erdbeerbaerlp.dcintegration.common.Discord;
+import de.erdbeerbaerlp.dcintegration.common.DiscordIntegration;
 import de.erdbeerbaerlp.dcintegration.common.addon.AddonConfigRegistry;
 import de.erdbeerbaerlp.dcintegration.common.addon.DiscordIntegrationAddon;
 import de.erdbeerbaerlp.dcintegration.common.storage.CommandRegistry;
@@ -15,10 +15,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class ExecCommandAddon implements DiscordIntegrationAddon, EventListener {
     static ExecuteCommandConfig cfg;
-    Discord discord;
+    DiscordIntegration discord;
 
     @Override
-    public void load(Discord dc) {
+    public void load(DiscordIntegration dc) {
         cfg = AddonConfigRegistry.loadConfig(ExecuteCommandConfig.class, this);
         discord = dc;
         System.out.println("Addon loaded");
@@ -34,7 +34,7 @@ public class ExecCommandAddon implements DiscordIntegrationAddon, EventListener 
     }
 
     @Override
-    public void unload(Discord dc) {
+    public void unload(DiscordIntegration dc) {
         if (dc.getJDA() != null) {
             dc.getJDA().removeEventListener(this);
         }
@@ -46,7 +46,7 @@ public class ExecCommandAddon implements DiscordIntegrationAddon, EventListener 
             if(((SlashCommandInteractionEvent) event).getName().equals("exec")){
                 final CompletableFuture<InteractionHook> reply = ((SlashCommandInteractionEvent) event).deferReply().submit();
                 final OptionMapping cmd = ((SlashCommandInteractionEvent) event).getOption("cmd");
-                discord.srv.runMcCommand(cmd.getAsString(),reply,((SlashCommandInteractionEvent) event).getUser());
+                discord.getServerInterface().runMcCommand(cmd.getAsString(),reply,((SlashCommandInteractionEvent) event).getUser());
             }
         }
     }

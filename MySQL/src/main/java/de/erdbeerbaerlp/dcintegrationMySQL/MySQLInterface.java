@@ -1,9 +1,8 @@
 package de.erdbeerbaerlp.dcintegrationMySQL;
 
-import de.erdbeerbaerlp.dcintegration.common.storage.PlayerLink;
-import de.erdbeerbaerlp.dcintegration.common.storage.PlayerSettings;
-import de.erdbeerbaerlp.dcintegration.common.storage.database.DBInterface;
-import de.erdbeerbaerlp.dcintegration.common.util.Variables;
+import de.erdbeerbaerlp.dcintegration.common.storage.linking.PlayerLink;
+import de.erdbeerbaerlp.dcintegration.common.storage.linking.PlayerSettings;
+import de.erdbeerbaerlp.dcintegration.common.storage.linking.database.DBInterface;
 
 import java.sql.*;
 import java.util.ArrayList;

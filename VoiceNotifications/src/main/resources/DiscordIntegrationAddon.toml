@@ -14,3 +14,5 @@ author = "ErdbeerbaerLP"
 
 # Description of the Addon (optional)
 description = "Sends ingame messages when users join voice channels"
+
+APIVersion = 3

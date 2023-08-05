@@ -7,30 +7,27 @@ import dcshadow.net.kyori.adventure.text.event.HoverEvent;
 import dcshadow.net.kyori.adventure.text.format.Style;
 import dcshadow.net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import dcshadow.org.apache.commons.lang3.ArrayUtils;
-import de.erdbeerbaerlp.dcintegration.common.Discord;
+import de.erdbeerbaerlp.dcintegration.common.DiscordIntegration;
 import de.erdbeerbaerlp.dcintegration.common.addon.AddonConfigRegistry;
 import de.erdbeerbaerlp.dcintegration.common.addon.DiscordIntegrationAddon;
 import de.erdbeerbaerlp.dcintegration.common.storage.Localization;
 import de.erdbeerbaerlp.dcintegration.common.util.ComponentUtils;
-import de.erdbeerbaerlp.dcintegration.common.util.Variables;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
-import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceUpdateEvent;
-import net.dv8tion.jda.api.hooks.EventListener;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.lang.reflect.InvocationTargetException;
 
 public class VoiceNotificationAddon extends ListenerAdapter implements DiscordIntegrationAddon {
     private VoiceConfig cfg;
-    Discord discord;
+    DiscordIntegration discord;
 
     @Override
-    public void load(Discord dc) {
+    public void load(DiscordIntegration dc) {
         cfg = AddonConfigRegistry.loadConfig(VoiceConfig.class, this);
         discord = dc;
-        Variables.LOGGER.info("Voice-Notifications Addon loaded");
+        DiscordIntegration.LOGGER.info("Voice-Notifications Addon loaded");
         if (dc.getJDA() != null)
             dc.getJDA().addEventListener(this);
     }
@@ -41,7 +38,7 @@ public class VoiceNotificationAddon extends ListenerAdapter implements DiscordIn
     }
 
     @Override
-    public void unload(Discord dc) {
+    public void unload(DiscordIntegration dc) {
         if (dc.getJDA() != null)
             dc.getJDA().removeEventListener(this);
     }
@@ -60,12 +57,12 @@ public class VoiceNotificationAddon extends ListenerAdapter implements DiscordIn
         }
         if (cfg.voiceChannels.length == 0 || (joinedChannel != null && ArrayUtils.contains(cfg.voiceChannels, joinedChannel.getId())) || (leftChannel != null && ArrayUtils.contains(cfg.voiceChannels, leftChannel.getId()))) {
             if (joinedChannel != null && leftChannel == null) {
-                discord.srv.sendMCMessage(LegacyComponentSerializer.legacySection().deserialize(cfg.joinMessage.replace("%dstName%", joinedChannel.getName())).replaceText(ComponentUtils.replace("%name%", Component.text(member.getEffectiveName()).style(Style.empty().clickEvent(ClickEvent.suggestCommand("<@" + member.getId() + ">")).hoverEvent(HoverEvent.showText(Component.text(Localization.instance().discordUserHover.replace("%user#tag%", member.getUser().getAsTag()).replace("%user%", member.getEffectiveName()).replace("%id%", member.getId()))))))));
+                discord.getServerInterface().sendIngameMessage(LegacyComponentSerializer.legacySection().deserialize(cfg.joinMessage.replace("%dstName%", joinedChannel.getName())).replaceText(ComponentUtils.replace("%name%", Component.text(member.getEffectiveName()).style(Style.empty().clickEvent(ClickEvent.suggestCommand("<@" + member.getId() + ">")).hoverEvent(HoverEvent.showText(Component.text(Localization.instance().discordUserHover.replace("%user#tag%", member.getUser().getAsTag()).replace("%user%", member.getEffectiveName()).replace("%id%", member.getId()))))))));
             } else if (leftChannel != null && joinedChannel == null) {
-                discord.srv.sendMCMessage(LegacyComponentSerializer.legacySection().deserialize(cfg.leaveMessage.replace("%sourceName%", leftChannel.getName())).replaceText(ComponentUtils.replace("%name%", Component.text(member.getEffectiveName()).style(Style.empty().clickEvent(ClickEvent.suggestCommand("<@" + member.getId() + ">")).hoverEvent(HoverEvent.showText(Component.text(Localization.instance().discordUserHover.replace("%user#tag%", member.getUser().getAsTag()).replace("%user%", member.getEffectiveName()).replace("%id%", member.getId()))))))));
+                discord.getServerInterface().sendIngameMessage(LegacyComponentSerializer.legacySection().deserialize(cfg.leaveMessage.replace("%sourceName%", leftChannel.getName())).replaceText(ComponentUtils.replace("%name%", Component.text(member.getEffectiveName()).style(Style.empty().clickEvent(ClickEvent.suggestCommand("<@" + member.getId() + ">")).hoverEvent(HoverEvent.showText(Component.text(Localization.instance().discordUserHover.replace("%user#tag%", member.getUser().getAsTag()).replace("%user%", member.getEffectiveName()).replace("%id%", member.getId()))))))));
 
             } else{
-                discord.srv.sendMCMessage(LegacyComponentSerializer.legacySection().deserialize(cfg.moveMessage.replace("%sourceName%", leftChannel.getName()).replace("%dstName%", joinedChannel.getName())).replaceText(ComponentUtils.replace("%name%", Component.text(member.getEffectiveName()).style(Style.empty().clickEvent(ClickEvent.suggestCommand("<@" + member.getId() + ">")).hoverEvent(HoverEvent.showText(Component.text(Localization.instance().discordUserHover.replace("%user#tag%", member.getUser().getAsTag()).replace("%user%", member.getEffectiveName()).replace("%id%", member.getId()))))))));
+                discord.getServerInterface().sendIngameMessage(LegacyComponentSerializer.legacySection().deserialize(cfg.moveMessage.replace("%sourceName%", leftChannel.getName()).replace("%dstName%", joinedChannel.getName())).replaceText(ComponentUtils.replace("%name%", Component.text(member.getEffectiveName()).style(Style.empty().clickEvent(ClickEvent.suggestCommand("<@" + member.getId() + ">")).hoverEvent(HoverEvent.showText(Component.text(Localization.instance().discordUserHover.replace("%user#tag%", member.getUser().getAsTag()).replace("%user%", member.getEffectiveName()).replace("%id%", member.getId()))))))));
             }
         }
     }

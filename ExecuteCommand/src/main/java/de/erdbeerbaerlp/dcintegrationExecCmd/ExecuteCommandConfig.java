@@ -1,7 +1,6 @@
 package de.erdbeerbaerlp.dcintegrationExecCmd;
 
 import dcshadow.com.moandjiezana.toml.TomlComment;
-import de.erdbeerbaerlp.dcintegration.common.addon.AddonConfiguration;
 
 
 public class ExecuteCommandConfig {
