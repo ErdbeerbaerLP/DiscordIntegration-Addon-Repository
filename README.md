@@ -9,5 +9,4 @@ INSTALLATION
 ---
 Addons are installed to `SERVER/DiscordIntegration-Data/addons`
 
-#### NOTE: To use addons with Java 11 and higher, start your server with `java --add-opens java.base/java.io=ALL-UNNAMED -jar SERVER.jar`
-This is required for loading addons, else you will get errors while loading the addons (server and DCI will still start properly)
+If you are using an older mod version with java 11 or higer and you are getting errors, please start the server with ``java --add-opens java.base/java.io=ALL-UNNAMED -jar SERVER.jar``
