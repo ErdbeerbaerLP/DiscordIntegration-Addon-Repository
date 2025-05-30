@@ -15,6 +15,7 @@ Adds an /exec command to discord, allowing to run *any* server command from disc
 #### 1.0.3 was released to support 2.4.x versions
 #### 1.0.4 supports 2.5.x
 #### 1.1.0 supports 3.x.x
+#### 1.1.1 Security fix!
 
 MySQL
 ==
